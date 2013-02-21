@@ -1,3 +1,9 @@
+2013-02-21  Martin Robinson  <mrobinson@igalia.com>
+
+        A couple more 'make dist' fixes for WebKitGTK+.
+
+        * GNUmakefile.list.am: Add a missing file to the source list.
+
 2013-02-21  Carlos Garcia Campos  <cgarcia@igalia.com>
 
         Unreviewed. Fix make distcheck.
