@@ -1,3 +1,10 @@
+2013-02-22  Carlos Garcia Campos  <cgarcia@igalia.com>
+
+        Unreviewed. Fix make distcheck.
+
+        * GNUmakefile.am: Add CodeGeneratorInspectorStrings.py to
+        EXTRA_DIST.
+
 2013-02-21  Martin Robinson  <mrobinson@igalia.com>
 
         A couple more 'make dist' fixes for WebKitGTK+.
