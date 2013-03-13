@@ -1,3 +1,31 @@
+2013-03-13  Carlos Garcia Campos  <cgarcia@igalia.com>
+
+        [GTK] Add webkit_uri_request_get_http_headers to WebKit2 GTK+ API
+        https://bugs.webkit.org/show_bug.cgi?id=112160
+
+        Reviewed by Martin Robinson.
+
+        * platform/network/soup/GOwnPtrSoup.cpp:
+        (WTF::SoupMessageHeaders): Add freeOwnedGPtr implementation for
+        SoupMessageHeaders.
+        (WTF):
+        * platform/network/soup/GOwnPtrSoup.h:
+        (WTF):
+        * platform/network/soup/ResourceRequest.h:
+        (ResourceRequest):
+        * platform/network/soup/ResourceRequestSoup.cpp:
+        (WebCore::ResourceRequest::updateSoupMessageHeaders): New function
+        to update the given SoupMessageHeaders with the ResourceRequest
+        headers.
+        (WebCore::ResourceRequest::updateFromSoupMessageHeaders): New
+        function to update the ResourceRequest headers with the given
+        SoupMessageHeaders.
+        (WebCore::ResourceRequest::updateSoupMessage): Use
+        updateSoupMessageHeaders() to update the headers.
+        (WebCore::ResourceRequest::toSoupMessage): Ditto.
+        (WebCore::ResourceRequest::updateFromSoupMessage): Use
+        updateFromSoupMessageHeaders to update the headers.
+
 2013-03-12  Zan Dobersek  <zdobersek@igalia.com>
 
         [GTK] Remove HILDON_CPPFLAGS and HILDON_CFLAGS references from GNUmakefiles
