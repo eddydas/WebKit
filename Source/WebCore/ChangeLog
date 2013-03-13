@@ -1,3 +1,37 @@
+2013-03-13  Carlos Garcia Campos  <cgarcia@igalia.com>
+
+        [GTK] Split GtkAuthenticationDialog in two widgets
+        https://bugs.webkit.org/show_bug.cgi?id=103644
+
+        Reviewed by Xan Lopez.
+
+        The current GtkAuthenticationDialog implements both the common
+        logic and widgets to implement a real GtkDialog and a widget to be
+        embedded in any container. WebKit1 uses a GtkDialog while WebKit2
+        embeds the dialog in the WebView. This patch splits the code to
+        leave in Platform only the code that is actually common, leaving
+        the widget implementation to the WebKit layer, using a dialog in
+        WebKit1 and embedding auth widget in the WebView in WebKit2.
+
+        * GNUmakefile.list.am: Add new files to compilation.
+        * platform/gtk/GtkAuthenticationDialog.cpp: Removed.
+        * platform/gtk/GtkAuthenticationDialog.h: Removed.
+        * platform/gtk/WebKitAuthenticationWidget.cpp: Added.
+        (_WebKitAuthenticationWidgetPrivate):
+        (packTwoColumnLayoutInBox):
+        (createLabel):
+        (createEntry):
+        (webkitAuthenticationWidgetInitialize):
+        (webkitAuthenticationWidgetFinalize):
+        (webkit_authentication_widget_init):
+        (webkit_authentication_widget_class_init):
+        (webkitAuthenticationWidgetNew):
+        (webkitAuthenticationWidgetCreateCredential):
+        (webkitAuthenticationWidgetGetChallenge):
+        * platform/gtk/WebKitAuthenticationWidget.h: Added.
+        (_WebKitAuthenticationWidget):
+        (_WebKitAuthenticationWidgetClass):
+
 2013-03-12  Tomas Popela  <tpopela@redhat.com>
 
         [Gtk] NBSP are not replaced when using X clipboard
