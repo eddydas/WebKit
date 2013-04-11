@@ -1,3 +1,29 @@
+2013-04-11  Carlos Garcia Campos  <cgarcia@igalia.com>
+
+        FrameLoaderClient::assignIdentifierToInitialRequest() not called for the main resource when loaded from the memory cache
+        https://bugs.webkit.org/show_bug.cgi?id=112418
+
+        Reviewed by Darin Adler.
+
+        When the main resource is loaded from the memory cache the
+        response is not added to the ResponseVector of the document
+        loader, so that when committing the provisional load the remaining
+        delegate messages are not called because the ResponseVector of the
+        document loader is empty. When the main resource is loaded from
+        the memory cache, there's no resource loader, and the client is
+        notified about the response received using
+        ResourceLoadNotifier::dispatchDidReceiveResponse() directly
+        instead of ResourceLoadNotifier::didReceiveResponse() which is the
+        one adding the response to the ResponseVector of the document
+        loader. So, the problem can be fixed by adding the response to the
+        ResponseVector before calling dispatchDidReceiveResponse() when
+        loading the main resource without a resource loade
+
+        Test: loader/go-back-cached-main-resource.html
+
+        * loader/DocumentLoader.cpp:
+        (WebCore::DocumentLoader::responseReceived):
+
 2013-04-08  Carlos Garcia Campos  <cgarcia@igalia.com>
 
         [GTK] DOM objects created wrapping a base class have incorrect GObject type

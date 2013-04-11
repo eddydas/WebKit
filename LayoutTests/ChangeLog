@@ -1,3 +1,17 @@
+2013-04-11  Manuel Rego Casasnovas  <rego@igalia.com>
+
+        FrameLoaderClient::assignIdentifierToInitialRequest() not called for the main resource when loaded from the memory cache
+        https://bugs.webkit.org/show_bug.cgi?id=112418
+
+        Reviewed by Darin Adler.
+
+        * loader/go-back-cached-main-resource-expected.txt: Added.
+        * loader/go-back-cached-main-resource.html: Added.
+        * loader/resources/first-page.html: Added.
+        * loader/resources/other-page.html: Added.
+        * platform/gtk-wk1/loader/go-back-cached-main-resource-expected.txt: Added.
+        * platform/wk2/loader/go-back-cached-main-resource-expected.txt: Added.
+
 2013-03-14  Xabier Rodriguez Calvar  <calvaris@igalia.com>
 
         [GStreamer] Stopping playback of html5 media when receiving a higher priority audio event needs implementation
