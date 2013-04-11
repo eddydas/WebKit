@@ -1,3 +1,118 @@
+2013-04-08  Carlos Garcia Campos  <cgarcia@igalia.com>
+
+        [GTK] DOM objects created wrapping a base class have incorrect GObject type
+        https://bugs.webkit.org/show_bug.cgi?id=113132
+
+        Reviewed by Gustavo Noronha Silva.
+
+        Some of the DOM methods can create a concrete instance of another
+        object, but return a base class. GObject bindings provide custom
+        kit implementations for Node, Element, Event and EvenTarget, so
+        any concrete HTMLElement wrapped as an HTMLElement ends up
+        wrapping the right WebCore object but in the wrong GObject type.
+        This affects not only HTMLElements, but any polymorphic object
+        wrapped using a base class.
+        This patch changes the way objects are created, so that all
+        classes have their own kit implementation, but for polymorphic
+        objects the kit implementation of the base class is always
+        used. The kit method of polymorphic base classes use a generic
+        wrap method instead of the wrapFoo method like all other
+        classes. In the static code we provide the implementation of the
+        generic wrap method for every polimorphic base class, falling back
+        to their wrapFoo method if the concrete object can't be used to
+        wrap the object.
+        Both WebKitDOMBinding and WebKitHTMLElementWrapperFactory now provide
+        implementations of wrap and have been renamed to WebKitDOMPrivate
+        and WebKitDOMHTMLPrivate.
+
+        * bindings/gobject/GNUmakefile.am:
+        * bindings/gobject/WebKitDOMBinding.cpp: Removed.
+        * bindings/gobject/WebKitDOMEventTarget.cpp:
+        (WebKit::kit): Moved kit implementation from WebKitDOMBinding for
+        consistency with all other objects that have their own kit.
+        (WebKit::core): Updated to match the core implementation fo all
+        other objects.
+        * bindings/gobject/WebKitDOMEventTargetPrivate.h:
+        (WebCore):
+        (WebKit):
+        * bindings/gobject/WebKitDOMHTMLPrivate.cpp: Added.
+        (WebKit): Use preprocessor macros to define and set the wrap
+        functions of all HTML elements, removing a lot of boilerplate code
+        and making it easier to add new wrap functions in the future.
+        (WebKit::wrap):
+        * bindings/gobject/WebKitDOMHTMLPrivate.h: Renamed from Source/WebCore/bindings/gobject/WebKitHTMLElementWrapperFactory.h.
+        (WebCore):
+        (WebKit):
+        * bindings/gobject/WebKitDOMObject.cpp:
+        * bindings/gobject/WebKitDOMPrivate.cpp: Added.
+        (WebKit):
+        (WebKit::wrap):
+        * bindings/gobject/WebKitDOMPrivate.h: Renamed from Source/WebCore/bindings/gobject/WebKitDOMBinding.h.
+        (WebCore):
+        (WebKit):
+        * bindings/gobject/WebKitHTMLElementWrapperFactory.cpp: Removed.
+        * bindings/scripts/CodeGeneratorGObject.pm:
+        (IsBaseType): Helper function to check if a type is a base class.
+        (GetBaseClass): Helper function to get the base class for a given
+        parent type.
+        (GenerateFunction): Remove special case for EventTarget since the
+        kit prototype of EventTarget is in its private header like all
+        other objects.
+        (GenerateCFile): Add a kit implementation for all objects.
+        (IsPolymorphic): Helper function to check if the given type is the
+        base class of a polymorphic object.
+        (Generate): Include the private header of the base class for
+        polymorphic objects.
+        (WriteData): Remove the special case for WebKitDOMNode since now
+        all objects has a kit method.
+        * bindings/scripts/test/GObject/WebKitDOMFloat64Array.cpp:
+        (WebKit::kit):
+        * bindings/scripts/test/GObject/WebKitDOMFloat64ArrayPrivate.h:
+        (WebKit):
+        * bindings/scripts/test/GObject/WebKitDOMTestActiveDOMObject.cpp:
+        * bindings/scripts/test/GObject/WebKitDOMTestActiveDOMObjectPrivate.h:
+        (WebKit):
+        * bindings/scripts/test/GObject/WebKitDOMTestCallback.cpp:
+        * bindings/scripts/test/GObject/WebKitDOMTestCallbackPrivate.h:
+        (WebKit):
+        * bindings/scripts/test/GObject/WebKitDOMTestCustomNamedGetter.cpp:
+        * bindings/scripts/test/GObject/WebKitDOMTestCustomNamedGetterPrivate.h:
+        (WebKit):
+        * bindings/scripts/test/GObject/WebKitDOMTestEventConstructor.cpp:
+        * bindings/scripts/test/GObject/WebKitDOMTestEventConstructorPrivate.h:
+        (WebKit):
+        * bindings/scripts/test/GObject/WebKitDOMTestEventTarget.cpp:
+        * bindings/scripts/test/GObject/WebKitDOMTestEventTargetPrivate.h:
+        (WebKit):
+        * bindings/scripts/test/GObject/WebKitDOMTestException.cpp:
+        * bindings/scripts/test/GObject/WebKitDOMTestExceptionPrivate.h:
+        (WebKit):
+        * bindings/scripts/test/GObject/WebKitDOMTestInterface.cpp:
+        * bindings/scripts/test/GObject/WebKitDOMTestInterfacePrivate.h:
+        (WebKit):
+        * bindings/scripts/test/GObject/WebKitDOMTestMediaQueryListListener.cpp:
+        * bindings/scripts/test/GObject/WebKitDOMTestMediaQueryListListenerPrivate.h:
+        (WebKit):
+        * bindings/scripts/test/GObject/WebKitDOMTestNamedConstructor.cpp:
+        * bindings/scripts/test/GObject/WebKitDOMTestNamedConstructorPrivate.h:
+        (WebKit):
+        * bindings/scripts/test/GObject/WebKitDOMTestNode.cpp:
+        (WebKit::kit):
+        * bindings/scripts/test/GObject/WebKitDOMTestNodePrivate.h:
+        (WebKit):
+        * bindings/scripts/test/GObject/WebKitDOMTestObj.cpp:
+        * bindings/scripts/test/GObject/WebKitDOMTestObjPrivate.h:
+        (WebKit):
+        * bindings/scripts/test/GObject/WebKitDOMTestOverloadedConstructors.cpp:
+        * bindings/scripts/test/GObject/WebKitDOMTestOverloadedConstructorsPrivate.h:
+        (WebKit):
+        * bindings/scripts/test/GObject/WebKitDOMTestSerializedScriptValueInterface.cpp:
+        * bindings/scripts/test/GObject/WebKitDOMTestSerializedScriptValueInterfacePrivate.h:
+        (WebKit):
+        * bindings/scripts/test/GObject/WebKitDOMTestTypedefs.cpp:
+        * bindings/scripts/test/GObject/WebKitDOMTestTypedefsPrivate.h:
+        (WebKit):
+
 2013-03-14  Xabier Rodriguez Calvar  <calvaris@igalia.com>
 
         [GStreamer] simulateAudioInterruption needs to be guarded by ENABLE(VIDEO)"

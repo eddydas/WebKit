@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2005 Apple Computer, Inc.  All rights reserved.
- * Copyright (C) 2010 Igalia S.L.
+ * Copyright (C) 2013 Igalia S.L.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -24,13 +23,17 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef WebKitHTMLElementWrapperFactory_h
-#define WebKitHTMLElementWrapperFactory_h
+#ifndef WebKitDOMHTMLPrivate_h
+#define WebKitDOMHTMLPrivate_h
 
-#include "HTMLElement.h"
+#include <webkitdom/webkitdomdefines.h>
 
-namespace WebKit {
-gpointer createHTMLElementWrapper(PassRefPtr<WebCore::HTMLElement>);
+namespace WebCore {
+class HTMLElement;
 }
 
-#endif // WebKitHTMLElementWrapperFactory_h
+namespace WebKit {
+WebKitDOMHTMLElement* wrap(WebCore::HTMLElement*);
+}
+
+#endif // WebKitDOMHTMLPrivate_h
