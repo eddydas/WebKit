@@ -1,3 +1,25 @@
+2013-04-07  Patrick Gansterer  <paroga@webkit.org>
+
+        Add default implementation for KURL::fileSystemPath()
+        https://bugs.webkit.org/show_bug.cgi?id=108326
+
+        Reviewed by Benjamin Poulain.
+
+        The code for KURL::fileSystemPath() has been duplicated in different ports.
+        Add an implementation of this function to KURL.cpp for this ports and
+        get rid of the very similar port specific implementation files.
+
+        * PlatformBlackBerry.cmake:
+        * PlatformEfl.cmake:
+        * PlatformWinCE.cmake:
+        * platform/KURL.cpp:
+        (WebCore):
+        (WebCore::KURL::fileSystemPath):
+        * platform/blackberry/KURLBlackBerry.cpp: Removed.
+        * platform/efl/KURLEfl.cpp: Removed.
+        * platform/wince/KURLWinCE.cpp: Removed.
+        * platform/wx/KURLWx.cpp: Removed.
+
 2013-06-03  Paweł Forysiuk  <tuxator@o2.pl>
 
         [harfbuzz] WebKit fails to build with MinGW compiler because of invalid cast in HarfBuzzShaper.cpp
