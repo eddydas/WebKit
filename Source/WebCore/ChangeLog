@@ -1,3 +1,18 @@
+2013-04-15  Patrick Gansterer  <paroga@webkit.org>
+
+        [GTK] Remove platform specific implementation of KURL::fileSystemPath()
+        https://bugs.webkit.org/show_bug.cgi?id=114133
+
+        Reviewed by Martin Robinson.
+
+        r147883 added a generic implementation of this function,
+        which can be used by all ports to share the code.
+
+        * GNUmakefile.list.am:
+        * platform/KURL.cpp:
+        (WebCore):
+        * platform/gtk/KURLGtk.cpp: Removed.
+
 2013-04-07  Patrick Gansterer  <paroga@webkit.org>
 
         Add default implementation for KURL::fileSystemPath()
