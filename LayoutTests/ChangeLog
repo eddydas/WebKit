@@ -1,3 +1,15 @@
+2013-04-10  Xabier Rodriguez Calvar  <calvaris@igalia.com>
+
+        Clicking on the volume slider of HTML5 elements is pausing sometimes
+        https://bugs.webkit.org/show_bug.cgi?id=112548
+
+        Reviewed by Eric Carlson.
+
+        Added test.
+
+        * media/click-volume-bar-not-pausing-expected.txt: Added.
+        * media/click-volume-bar-not-pausing.html: Added.
+
 2013-06-07  Zalan Bujtas  <zalan@apple.com>
 
         Frame flattening: crash when child iframe is removed during beforeload.
