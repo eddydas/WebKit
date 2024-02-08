@@ -29,8 +29,8 @@
 #if ENABLE(MODEL_PROCESS)
 
 #include "DataReference.h"
-#include "GPUConnectionToWebProcessMessages.h"
 #include "Logging.h"
+#include "ModelConnectionToWebProcessMessages.h"
 #include "ModelProcessConnectionInfo.h"
 #include "ModelProcessConnectionMessages.h"
 #include "ModelProcessConnectionParameters.h"
@@ -144,18 +144,18 @@ bool ModelProcessConnection::waitForDidInitialize()
 #if HAVE(VISIBILITY_PROPAGATION_VIEW)
 void ModelProcessConnection::createVisibilityPropagationContextForPage(WebPage& page)
 {
-    connection().send(Messages::GPUConnectionToWebProcess::CreateVisibilityPropagationContextForPage(page.webPageProxyIdentifier(), page.identifier(), page.canShowWhileLocked()), { });
+    connection().send(Messages::ModelConnectionToWebProcess::CreateVisibilityPropagationContextForPage(page.webPageProxyIdentifier(), page.identifier(), page.canShowWhileLocked()), { });
 }
 
 void ModelProcessConnection::destroyVisibilityPropagationContextForPage(WebPage& page)
 {
-    connection().send(Messages::GPUConnectionToWebProcess::DestroyVisibilityPropagationContextForPage(page.webPageProxyIdentifier(), page.identifier()), { });
+    connection().send(Messages::ModelConnectionToWebProcess::DestroyVisibilityPropagationContextForPage(page.webPageProxyIdentifier(), page.identifier()), { });
 }
 #endif
 
 void ModelProcessConnection::configureLoggingChannel(const String& channelName, WTFLogChannelState state, WTFLogLevel level)
 {
-    connection().send(Messages::GPUConnectionToWebProcess::ConfigureLoggingChannel(channelName, state, level), { });
+    connection().send(Messages::ModelConnectionToWebProcess::ConfigureLoggingChannel(channelName, state, level), { });
 }
 
 } // namespace WebKit
