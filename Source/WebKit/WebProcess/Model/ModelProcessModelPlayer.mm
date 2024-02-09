@@ -28,9 +28,11 @@
 
 #if ENABLE(MODEL_PROCESS)
 
+#import "ModelProcessConnection.h"
 #import "WebPage.h"
 #import "WebProcess.h"
 #import <pal/spi/cocoa/QuartzCoreSPI.h>
+#import <WebCore/Model.h>
 
 namespace WebKit {
 
@@ -44,6 +46,7 @@ ModelProcessModelPlayer::ModelProcessModelPlayer(WebPage& page, WebCore::ModelPl
     , m_client { client }
 {
     // FIXME: This should remotely-host a layer tree from the model process.
+    RELEASE_LOG(Process, "EDDYEDDY ModelProcessModelPlayer::init");
 
     WebProcess::singleton().ensureModelProcessConnection();
 }
@@ -52,8 +55,13 @@ ModelProcessModelPlayer::~ModelProcessModelPlayer()
 {
 }
 
-void ModelProcessModelPlayer::load(WebCore::Model&, WebCore::LayoutSize)
+void ModelProcessModelPlayer::load(WebCore::Model& model, WebCore::LayoutSize)
 {
+    RELEASE_LOG(Process, "EDDYEDDY ModelProcessModelPlayer::load:");
+    
+    auto& connection = WebProcess::singleton().ensureModelProcessConnection();
+
+    connection.loadModel(model);
 }
 
 void ModelProcessModelPlayer::sizeDidChange(LayoutSize)

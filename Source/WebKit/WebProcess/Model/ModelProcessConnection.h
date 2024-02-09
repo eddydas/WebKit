@@ -33,6 +33,7 @@
 #include <wtf/WeakHashSet.h>
 #include <wtf/WeakPtr.h>
 #include <wtf/text/WTFString.h>
+#include <WebCore/Model.h>
 
 namespace WebKit {
 
@@ -59,6 +60,8 @@ public:
 #endif
 
     void configureLoggingChannel(const String&, WTFLogChannelState, WTFLogLevel);
+
+    void loadModel(Ref<WebCore::Model>&&);
 
     class Client : public CanMakeWeakPtr<Client> {
     public:

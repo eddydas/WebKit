@@ -142,6 +142,11 @@ void ModelConnectionToWebProcess::configureLoggingChannel(const String& channelN
 #endif
 }
 
+void ModelConnectionToWebProcess::loadModel(Ref<WebCore::Model>&& model)
+{
+    RELEASE_LOG(Process, "EDDYEDDY ModelConnectionToWebProcess::loadModel: size=%zu url=%s", model->data()->size(), model->url().string().utf8().data());
+}
+
 bool ModelConnectionToWebProcess::allowsExitUnderMemoryPressure() const
 {
     // FIXME: Should allow exit if we have no models.

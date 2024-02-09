@@ -28,7 +28,9 @@ messages -> ModelConnectionToWebProcess WantsDispatchMessage {
     DestroyVisibilityPropagationContextForPage(WebKit::WebPageProxyIdentifier pageProxyID, WebCore::PageIdentifier pageID);
 #endif
 
-    ConfigureLoggingChannel(String channelName, enum:uint8_t WTFLogChannelState state, enum:uint8_t WTFLogLevel level)
+    ConfigureLoggingChannel(String channelName, enum:uint8_t WTFLogChannelState state, enum:uint8_t WTFLogLevel level);
+
+    LoadModel(Ref<WebCore::Model> url);
 }
 
 #endif // ENABLE(MODEL_PROCESS)

@@ -158,6 +158,11 @@ void ModelProcessConnection::configureLoggingChannel(const String& channelName, 
     connection().send(Messages::ModelConnectionToWebProcess::ConfigureLoggingChannel(channelName, state, level), { });
 }
 
+void ModelProcessConnection::loadModel(Ref<WebCore::Model>&& model)
+{
+    connection().send(Messages::ModelConnectionToWebProcess::LoadModel(model), { });
+}
+
 } // namespace WebKit
 
 #endif // ENABLE(MODEL_PROCESS)

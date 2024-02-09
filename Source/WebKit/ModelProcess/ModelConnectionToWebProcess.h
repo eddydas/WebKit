@@ -33,6 +33,7 @@
 #include "ModelConnectionToWebProcessMessages.h"
 #include "ScopedActiveMessageReceiveQueue.h"
 #include "WebPageProxyIdentifier.h"
+#include <WebCore/Model.h>
 #include <WebCore/PageIdentifier.h>
 #include <WebCore/ProcessIdentifier.h>
 #include <WebCore/ProcessIdentity.h>
@@ -93,6 +94,7 @@ private:
 #endif
 
     void configureLoggingChannel(const String&, WTFLogChannelState, WTFLogLevel);
+    void loadModel(Ref<WebCore::Model>&&);
 
     // IPC::Connection::Client
     void didClose(IPC::Connection&) final;
