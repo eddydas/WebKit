@@ -28,6 +28,7 @@
 #if ENABLE(MODEL_PROCESS)
 
 #import "ModelIdentifier.h"
+#import "RenderingBackendIdentifier.h"
 #import "WebPage.h"
 #import "WebPageProxyMessages.h"
 #import <WebCore/ModelPlayer.h>
@@ -72,6 +73,9 @@ private:
 
     WeakPtr<WebPage> m_page;
     WeakPtr<WebCore::ModelPlayerClient> m_client;
+    
+    // EDDY
+    RenderingBackendIdentifier m_identifier;
 };
 
 }

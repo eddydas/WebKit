@@ -4468,7 +4468,7 @@
 		2D56C1B028A367760081BD25 /* ModelProcessCocoa.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ModelProcessCocoa.mm; sourceTree = "<group>"; };
 		2D56C1B128A367760081BD25 /* ModelProcess.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ModelProcess.cpp; sourceTree = "<group>"; };
 		2D56C1B828A367760081BD25 /* ModelServiceEntryPoint.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ModelServiceEntryPoint.mm; sourceTree = "<group>"; };
-		2D56C1B928A367760081BD25 /* ModelConnectionToWebProcess.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ModelConnectionToWebProcess.cpp; sourceTree = "<group>"; };
+		2D56C1B928A367760081BD25 /* ModelConnectionToWebProcess.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ModelConnectionToWebProcess.mm; sourceTree = "<group>"; };
 		2D56C1D228A367A00081BD25 /* com.apple.WebKit.Model.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = com.apple.WebKit.Model.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D56C1D428A369510081BD25 /* ModelService.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ModelService.xcconfig; sourceTree = "<group>"; };
 		2D5C9D0319C81D8F00B3C5C1 /* WebPageOverlay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebPageOverlay.cpp; sourceTree = "<group>"; };
@@ -10331,9 +10331,9 @@
 				2D56C1AF28A367760081BD25 /* cocoa */,
 				2D56C1B228A367760081BD25 /* EntryPoint */,
 				2D56C1A628A367760081BD25 /* ios */,
-				2D56C1B928A367760081BD25 /* ModelConnectionToWebProcess.cpp */,
 				2D56C1A828A367760081BD25 /* ModelConnectionToWebProcess.h */,
 				2D56C1AE28A367760081BD25 /* ModelConnectionToWebProcess.messages.in */,
+				2D56C1B928A367760081BD25 /* ModelConnectionToWebProcess.mm */,
 				2D56C1B128A367760081BD25 /* ModelProcess.cpp */,
 				2D56C1AD28A367760081BD25 /* ModelProcess.h */,
 				2D56C1A428A367760081BD25 /* ModelProcess.messages.in */,

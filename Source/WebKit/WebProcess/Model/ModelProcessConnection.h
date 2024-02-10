@@ -29,6 +29,7 @@
 
 #include "Connection.h"
 #include "MessageReceiverMap.h"
+#include "RenderingBackendIdentifier.h"
 #include <wtf/RefCounted.h>
 #include <wtf/WeakHashSet.h>
 #include <wtf/WeakPtr.h>
@@ -61,7 +62,7 @@ public:
 
     void configureLoggingChannel(const String&, WTFLogChannelState, WTFLogLevel);
 
-    void loadModel(Ref<WebCore::Model>&&);
+    void loadModel(RenderingBackendIdentifier identifier, Ref<WebCore::Model>&&);
 
     class Client : public CanMakeWeakPtr<Client> {
     public:

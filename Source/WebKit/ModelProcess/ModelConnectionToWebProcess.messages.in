@@ -22,6 +22,7 @@
 
 #if ENABLE(MODEL_PROCESS)
 
+
 messages -> ModelConnectionToWebProcess WantsDispatchMessage {
 #if HAVE(VISIBILITY_PROPAGATION_VIEW)
     CreateVisibilityPropagationContextForPage(WebKit::WebPageProxyIdentifier pageProxyID, WebCore::PageIdentifier pageID, bool canShowWhileLocked);
@@ -30,7 +31,8 @@ messages -> ModelConnectionToWebProcess WantsDispatchMessage {
 
     ConfigureLoggingChannel(String channelName, enum:uint8_t WTFLogChannelState state, enum:uint8_t WTFLogLevel level);
 
-    LoadModel(Ref<WebCore::Model> url);
+    // EDDY
+    LoadModel(WebKit::RenderingBackendIdentifier identifier, Ref<WebCore::Model> model);
 }
 
 #endif // ENABLE(MODEL_PROCESS)

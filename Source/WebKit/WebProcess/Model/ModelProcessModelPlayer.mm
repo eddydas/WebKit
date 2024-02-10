@@ -44,6 +44,7 @@ Ref<ModelProcessModelPlayer> ModelProcessModelPlayer::create(WebPage& page, WebC
 ModelProcessModelPlayer::ModelProcessModelPlayer(WebPage& page, WebCore::ModelPlayerClient& client)
     : m_page { page }
     , m_client { client }
+    , m_identifier { RenderingBackendIdentifier::generate() }
 {
     // FIXME: This should remotely-host a layer tree from the model process.
     RELEASE_LOG(Process, "EDDYEDDY ModelProcessModelPlayer::init");
@@ -61,7 +62,7 @@ void ModelProcessModelPlayer::load(WebCore::Model& model, WebCore::LayoutSize)
     
     auto& connection = WebProcess::singleton().ensureModelProcessConnection();
 
-    connection.loadModel(model);
+    connection.loadModel(m_identifier, model);
 }
 
 void ModelProcessModelPlayer::sizeDidChange(LayoutSize)

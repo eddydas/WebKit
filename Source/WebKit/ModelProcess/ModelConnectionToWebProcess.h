@@ -31,6 +31,7 @@
 #include "LayerHostingContext.h"
 #include "MessageReceiverMap.h"
 #include "ModelConnectionToWebProcessMessages.h"
+#include "RenderingBackendIdentifier.h"
 #include "ScopedActiveMessageReceiveQueue.h"
 #include "WebPageProxyIdentifier.h"
 #include <WebCore/Model.h>
@@ -94,7 +95,9 @@ private:
 #endif
 
     void configureLoggingChannel(const String&, WTFLogChannelState, WTFLogLevel);
-    void loadModel(Ref<WebCore::Model>&&);
+        
+    // EDDY
+    void loadModel(RenderingBackendIdentifier identifier, Ref<WebCore::Model>&&);
 
     // IPC::Connection::Client
     void didClose(IPC::Connection&) final;

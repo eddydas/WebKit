@@ -92,7 +92,7 @@ GPUProcess/webrtc/RemoteSampleBufferDisplayLayer.cpp
 GPUProcess/webrtc/RemoteSampleBufferDisplayLayerManager.cpp
 
 ModelProcess/ModelProcess.cpp
-ModelProcess/ModelConnectionToWebProcess.cpp
+// ModelProcess/ModelConnectionToWebProcess.cpp
 
 NetworkProcess/BackgroundFetchLoad.cpp
 NetworkProcess/DatabaseUtilities.cpp
