@@ -59,6 +59,7 @@ class SecurityOriginData;
 
 namespace WebKit {
 
+class TmpModelPlayer;
 class ModelProcess;
 struct ModelProcessConnectionParameters;
 
@@ -129,8 +130,69 @@ private:
 #if ENABLE(IPC_TESTING_API)
     IPCTester m_ipcTester;
 #endif
+
+    using TmpModelPlayerMap = HashMap<RenderingBackendIdentifier, Ref<TmpModelPlayer>>;
+    TmpModelPlayerMap m_tmpModelPlayers;
 };
 
 } // namespace WebKit
 
+
+
+
+
+namespace WebCore {
+// class Model;
+//class REModel;
+//class REModelLoader;
+}
+
+namespace WebKit {
+
+class TmpModelPlayer final : public ThreadSafeRefCounted<TmpModelPlayer>
+//, public WebCore::REModelLoaderClient
+{
+public:
+    static Ref<TmpModelPlayer> create();
+    ~TmpModelPlayer();
+
+    void load(WebCore::Model&);
+
+//    void updateTransform();
+//    void updateOpacity();
+//
+//    float cameraPitch() const { return m_pitch; }
+//    void setCameraPitch(float pitch) { m_pitch = pitch; }
+//    float cameraYaw() const { return m_yaw; }
+//    void setCameraYaw(float yaw) { m_yaw = yaw; }
+
+//    void setLayer(WKSeparatedModelLayer *);
+//    WKSeparatedModelLayer *layer() const;
+
+//    void didMoveToWindow();
+
+private:
+    TmpModelPlayer();
+
+//    // WebCore::REModelLoaderClient overrides.
+//    virtual void didFinishLoading(WebCore::REModelLoader&, Ref<WebCore::REModel>) final;
+//    virtual void didFailLoading(WebCore::REModelLoader&, const WebCore::ResourceError&) final;
+
+//    void startAnimating();
+//
+//    CGFloat effectivePointsPerMeter();
+
+//    WeakObjCPtr<WKSeparatedModelLayer> m_layer;
+//    RefPtr<WebCore::REModelLoader> m_loader;
+//    RefPtr<WebCore::REModel> m_model;
+//    simd_float3 m_originalBoundingBoxExtents { simd_make_float3(0, 0, 0) };
+//    float m_pitch { 0 };
+//    float m_yaw { 0 };
+//    REAnimationPlaybackToken m_animationPlaybackToken { kInvalidAnimationToken };
+    
+    std::unique_ptr<LayerHostingContext> m_inlineLayerHostingContext;
+    RetainPtr<CALayer> m_layer;
+};
+
+}
 #endif // ENABLE(MODEL_PROCESS)
