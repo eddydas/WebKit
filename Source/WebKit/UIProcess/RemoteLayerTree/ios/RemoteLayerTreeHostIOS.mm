@@ -41,6 +41,10 @@
 #import "WKModelView.h"
 #endif
 
+@interface WKLayerHostView : PlatformView
+@property (nonatomic, assign) uint32_t contextID;
+@end
+
 namespace WebKit {
 using namespace WebCore;
 
@@ -58,8 +62,16 @@ std::unique_ptr<RemoteLayerTreeNode> RemoteLayerTreeHost::makeNode(const RemoteL
     case PlatformCALayer::LayerType::LayerTypeTiledBackingLayer:
     case PlatformCALayer::LayerType::LayerTypePageTiledBackingLayer:
     case PlatformCALayer::LayerType::LayerTypeContentsProvidedLayer:
-    case PlatformCALayer::LayerType::LayerTypeHost:
         return makeWithView(adoptNS([[WKCompositingView alloc] init]));
+            
+    case PlatformCALayer::LayerType::LayerTypeHost: {
+        WKLayerHostView *layerHostView = [[WKLayerHostView alloc] init];
+        auto hostingContextID = properties.hostIdentifier().value();
+        RELEASE_LOG(Process, "EDDYEDDY creating WKLayerHostView with ctxID %llu", hostingContextID.toUInt64());
+        [layerHostView setContextID:hostingContextID.toUInt64()];
+        return makeWithView(adoptNS(layerHostView));
+    }
+            
 
     case PlatformCALayer::LayerType::LayerTypeTiledBackingTileLayer:
         return RemoteLayerTreeNode::createWithPlainLayer(properties.layerID);

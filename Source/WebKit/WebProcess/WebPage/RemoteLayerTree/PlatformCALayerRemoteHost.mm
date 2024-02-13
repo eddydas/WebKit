@@ -24,6 +24,7 @@
  */
 
 #import "config.h"
+#import "Logging.h"
 #import "PlatformCALayerRemoteHost.h"
 
 #import "RemoteLayerTreeContext.h"
@@ -33,6 +34,7 @@ namespace WebKit {
 Ref<PlatformCALayerRemote> PlatformCALayerRemoteHost::create(WebCore::LayerHostingContextIdentifier identifier, WebCore::PlatformCALayerClient* owner, RemoteLayerTreeContext& context)
 {
     auto layer = adoptRef(*new PlatformCALayerRemoteHost(identifier, owner, context));
+    RELEASE_LOG(Process, "EDDYEDDY PlatformCALayerRemoteHost::create -> %llu", identifier.toUInt64());
     context.layerDidEnterContext(layer.get(), layer->layerType());
     return WTFMove(layer);
 }

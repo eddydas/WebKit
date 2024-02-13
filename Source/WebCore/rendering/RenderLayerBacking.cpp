@@ -1199,7 +1199,8 @@ bool RenderLayerBacking::updateConfiguration(const RenderLayer* compositingAnces
             auto layerHostingContextID = element->modelPlayer()->layerHostingContextID();
             if (layerHostingContextID) {
                 RELEASE_LOG(Process, "EDDYEDDY m_graphicsLayer->setContentsToModel has context ID: %u", layerHostingContextID.value());
-                m_graphicsLayer->setContentsToModel(WTFMove(model), element->isInteractive() ? GraphicsLayer::ModelInteraction::Enabled : GraphicsLayer::ModelInteraction::Disabled);
+                //m_graphicsLayer->setContentsToModel(WTFMove(model), element->isInteractive() ? GraphicsLayer::ModelInteraction::Enabled : GraphicsLayer::ModelInteraction::Disabled);
+                m_graphicsLayer->setContentsToPlatformLayerHost(LayerHostingContextIdentifier(layerHostingContextID.value()));
                 element->sizeMayHaveChanged();
                 layerConfigChanged = true;
             }
