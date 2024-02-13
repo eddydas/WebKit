@@ -171,8 +171,9 @@ void ModelProcessConnection::loadModel(RenderingBackendIdentifier identifier, Re
 //    auto sendResult = WebProcess::singleton().ensureNetworkProcessConnection().connection().sendSync(Messages::NetworkConnectionToWebProcess::TestProcessIncomingSyncMessagesWhenWaitingForSyncReply(page().webPageProxyIdentifier()), 0);
 //    auto [handled] = sendResult.takeReplyOr(false);
 //    return handled;
+    RELEASE_LOG(Process, "EDDYEDDY RequestHostingContextID initiated for %llu", identifier.toUInt64());
 
-    auto sendResult = connection().sendSync(Messages::ModelConnectionToWebProcess::RequestHostingContextID(identifier), 0);
+    auto sendResult = connection().sendSync(Messages::ModelConnectionToWebProcess::RequestHostingContextID(identifier), 0, Seconds::infinity(), IPC::SendSyncOption::ForceDispatchWhenDestinationIsWaitingForUnboundedSyncReply);
     auto [contextID] = sendResult.takeReplyOr(0);
     RELEASE_LOG(Process, "EDDYEDDY RequestHostingContextID callback ctxID:%u", contextID);
     m_contextIDForBackendIdentifier.set(identifier, contextID);
