@@ -49,6 +49,8 @@ private:
 
     Ref<WebCore::PlatformCALayer> createPlatformCALayer(WebCore::PlatformCALayer::LayerType, WebCore::PlatformCALayerClient* owner) override;
     Ref<WebCore::PlatformCALayer> createPlatformCALayer(PlatformLayer*, WebCore::PlatformCALayerClient* owner) override;
+    Ref<WebCore::PlatformCALayer> createPlatformCALayer(WebCore::PlatformCALayer::LayerType, WebCore::LayerHostingContextID, PlatformCALayerClient* owner) override;
+    
 #if ENABLE(MODEL_ELEMENT)
     Ref<WebCore::PlatformCALayer> createPlatformCALayer(Ref<WebCore::Model>, WebCore::PlatformCALayerClient* owner) override;
 #endif

@@ -272,6 +272,7 @@ private:
 
     virtual Ref<PlatformCALayer> createPlatformCALayer(PlatformCALayer::LayerType, PlatformCALayerClient* owner);
     virtual Ref<PlatformCALayer> createPlatformCALayer(PlatformLayer*, PlatformCALayerClient* owner);
+    virtual Ref<WebCore::PlatformCALayer> createPlatformCALayer(WebCore::PlatformCALayer::LayerType, LayerHostingContextID, PlatformCALayerClient* owner);
 #if ENABLE(MODEL_ELEMENT)
     virtual Ref<PlatformCALayer> createPlatformCALayer(Ref<WebCore::Model>, PlatformCALayerClient* owner);
 #endif

@@ -52,6 +52,13 @@ Ref<PlatformCALayerRemote> PlatformCALayerRemoteCustom::create(PlatformLayer *pl
     return WTFMove(layer);
 }
 
+Ref<PlatformCALayerRemote> PlatformCALayerRemoteCustom::create(LayerType layerType, WebKit::LayerHostingContextID layerHostingContextID, PlatformCALayerClient* owner, RemoteLayerTreeContext& context)
+{
+    auto layer = adoptRef(*new PlatformCALayerRemoteCustom(layerType, layerHostingContextID, owner, context));
+    context.layerDidEnterContext(layer.get(), layer->layerType());
+    return WTFMove(layer);
+}
+
 #if HAVE(AVKIT)
 Ref<PlatformCALayerRemote> PlatformCALayerRemoteCustom::create(WebCore::HTMLVideoElement& videoElement, PlatformCALayerClient* owner, RemoteLayerTreeContext& context)
 {
@@ -61,6 +68,13 @@ Ref<PlatformCALayerRemote> PlatformCALayerRemoteCustom::create(WebCore::HTMLVide
 }
 #endif
 
+PlatformCALayerRemoteCustom::PlatformCALayerRemoteCustom(LayerType layerType, WebKit::LayerHostingContextID layerHostingContextID, PlatformCALayerClient* owner, RemoteLayerTreeContext& context)
+    : PlatformCALayerRemote(layerType, owner, context)
+{
+    m_layerHostingContext = LayerHostingContext::createTransportLayerForRemoteHosting(layerHostingContextID);
+}
+
+// FIXME: Remove this, since m_hasVideo shouldn't be necessary anymore as per Tim
 PlatformCALayerRemoteCustom::PlatformCALayerRemoteCustom(HTMLVideoElement& videoElement, PlatformCALayerClient* owner, RemoteLayerTreeContext& context)
     : PlatformCALayerRemote(PlatformCALayer::LayerType::LayerTypeAVPlayerLayer, owner, context)
 {

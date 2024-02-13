@@ -71,7 +71,13 @@ Ref<PlatformCALayerRemote> PlatformCALayerRemote::create(PlatformLayer *platform
     return PlatformCALayerRemoteCustom::create(platformLayer, owner, context);
 }
 
+Ref<PlatformCALayerRemote> PlatformCALayerRemote::create(LayerType layerType, WebKit::LayerHostingContextID layerHostingContextID, PlatformCALayerClient* owner, RemoteLayerTreeContext& context)
+{
+    return PlatformCALayerRemoteCustom::create(layerType, layerHostingContextID, owner, context);
+}
+
 #if ENABLE(MODEL_ELEMENT)
+// Non-ModelProcess path
 Ref<PlatformCALayerRemote> PlatformCALayerRemote::create(Ref<WebCore::Model> model, WebCore::PlatformCALayerClient* owner, RemoteLayerTreeContext& context)
 {
     return PlatformCALayerRemoteModelHosting::create(model, owner, context);

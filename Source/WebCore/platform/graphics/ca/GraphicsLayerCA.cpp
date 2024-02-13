@@ -340,6 +340,12 @@ Ref<PlatformCALayer> GraphicsLayerCA::createPlatformCALayer(PlatformLayer* platf
     return PlatformCALayerCocoa::create(platformLayer, owner);
 }
 
+Ref<WebCore::PlatformCALayer> GraphicsLayerCA::createPlatformCALayer(WebCore::PlatformCALayer::LayerType, LayerHostingContextID, PlatformCALayerClient* owner)
+{
+    ASSERT_NOT_REACHED_WITH_MESSAGE("GraphicsLayerCARemote::createPlatformCALayerHost should always be called instead of this, but this symbol is needed to compile WebKitLegacy.");
+    return GraphicsLayerCA::createPlatformCALayer(PlatformCALayer::LayerType::LayerTypeLayer, owner);
+}
+
 #if ENABLE(MODEL_ELEMENT)
 Ref<PlatformCALayer> GraphicsLayerCA::createPlatformCALayer(Ref<WebCore::Model>, PlatformCALayerClient* owner)
 {

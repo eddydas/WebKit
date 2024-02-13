@@ -26,6 +26,7 @@
 #pragma once
 
 #include "LayerProperties.h"
+#include "LayerHostingContext.h"
 #include "RemoteLayerTreeTransaction.h"
 #include <WebCore/HTMLMediaElementIdentifier.h>
 #include <WebCore/PlatformCALayer.h>
@@ -54,6 +55,7 @@ struct PlatformCALayerRemoteDelegatedContents {
 class PlatformCALayerRemote : public WebCore::PlatformCALayer, public CanMakeWeakPtr<PlatformCALayerRemote> {
 public:
     static Ref<PlatformCALayerRemote> create(WebCore::PlatformCALayer::LayerType, WebCore::PlatformCALayerClient*, RemoteLayerTreeContext&);
+    static Ref<PlatformCALayerRemote> create(WebCore::PlatformCALayer::LayerType, WebKit::LayerHostingContextID layerHostingContextID, WebCore::PlatformCALayerClient*, RemoteLayerTreeContext&);
     static Ref<PlatformCALayerRemote> create(PlatformLayer *, WebCore::PlatformCALayerClient*, RemoteLayerTreeContext&);
 #if ENABLE(MODEL_ELEMENT)
     static Ref<PlatformCALayerRemote> create(Ref<WebCore::Model>, WebCore::PlatformCALayerClient*, RemoteLayerTreeContext&);
@@ -257,8 +259,8 @@ public:
 
 protected:
     PlatformCALayerRemote(WebCore::PlatformCALayer::LayerType, WebCore::PlatformCALayerClient* owner, RemoteLayerTreeContext&);
+    PlatformCALayerRemote(WebCore::PlatformCALayer::LayerType, WebKit::LayerHostingContextID, WebCore::PlatformCALayerClient* owner, RemoteLayerTreeContext&);
     PlatformCALayerRemote(const PlatformCALayerRemote&, WebCore::PlatformCALayerClient*, RemoteLayerTreeContext&);
-
     void updateClonedLayerProperties(PlatformCALayerRemote& clone, bool copyContents = true) const;
 
 private:

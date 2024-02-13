@@ -76,7 +76,13 @@ Ref<PlatformCALayer> GraphicsLayerCARemote::createPlatformCALayer(PlatformLayer*
     return PlatformCALayerRemote::create(platformLayer, owner, *m_context);
 }
 
+Ref<PlatformCALayer> GraphicsLayerCARemote::createPlatformCALayer(WebCore::PlatformCALayer::LayerType layerType, WebKit::LayerHostingContextID layerHostingContextID, PlatformCALayerClient* owner)
+{
+    return PlatformCALayerRemote::create(layerType, layerHostingContextID, owner, *m_context);
+}
+
 #if ENABLE(MODEL_ELEMENT)
+// non-ModelProcess path
 Ref<PlatformCALayer> GraphicsLayerCARemote::createPlatformCALayer(Ref<WebCore::Model> model, PlatformCALayerClient* owner)
 {
     return PlatformCALayerRemote::create(model, owner, *m_context);
