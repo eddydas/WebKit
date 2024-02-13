@@ -1166,8 +1166,10 @@ bool RenderLayerBacking::updateConfiguration(const RenderLayer* compositingAnces
             && videoElement.document().page()
             && videoElement.document().page()->chrome().client().isUsingUISideCompositing()
 #endif
-            )
+            ) {
+
             m_graphicsLayer->setContentsToVideoElement(videoElement, GraphicsLayer::ContentsLayerPurpose::Media);
+        }
         else
             m_graphicsLayer->setContentsToPlatformLayer(videoElement.platformLayer(), GraphicsLayer::ContentsLayerPurpose::Media);
         updateContentsRects();
@@ -1188,22 +1190,23 @@ bool RenderLayerBacking::updateConfiguration(const RenderLayer* compositingAnces
 
         // Some ModelPlayers use a platformLayer() and some pass the Model to the layer as contents,
         // but this is a runtime decision.
-        if (element->usesPlatformLayer())
+        if (element->usesPlatformLayer()) {
             m_graphicsLayer->setContentsToPlatformLayer(element->platformLayer(), GraphicsLayer::ContentsLayerPurpose::Model);
+            element->sizeMayHaveChanged();
+            layerConfigChanged = true;
+        }
         else if (auto model = element->model()) {
             auto layerHostingContextID = element->modelPlayer()->layerHostingContextID();
             if (layerHostingContextID) {
                 RELEASE_LOG(Process, "EDDYEDDY m_graphicsLayer->setContentsToModel has context ID: %u", layerHostingContextID.value());
+                m_graphicsLayer->setContentsToModel(WTFMove(model), element->isInteractive() ? GraphicsLayer::ModelInteraction::Enabled : GraphicsLayer::ModelInteraction::Disabled);
+                element->sizeMayHaveChanged();
+                layerConfigChanged = true;
             }
             else {
                 RELEASE_LOG(Process, "EDDYEDDY m_graphicsLayer->setContentsToModel has no context ID");
             }
-            m_graphicsLayer->setContentsToModel(WTFMove(model), element->isInteractive() ? GraphicsLayer::ModelInteraction::Enabled : GraphicsLayer::ModelInteraction::Disabled);
         }
-
-        element->sizeMayHaveChanged();
-
-        layerConfigChanged = true;
     }
 #endif
     // FIXME: Why do we do this twice?

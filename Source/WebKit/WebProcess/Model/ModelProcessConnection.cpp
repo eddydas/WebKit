@@ -168,6 +168,20 @@ void ModelProcessConnection::configureLoggingChannel(const String& channelName, 
 
 void ModelProcessConnection::loadModel(RenderingBackendIdentifier identifier, Ref<WebCore::Model>&& model)
 {
+//    auto sendResult = WebProcess::singleton().ensureNetworkProcessConnection().connection().sendSync(Messages::NetworkConnectionToWebProcess::TestProcessIncomingSyncMessagesWhenWaitingForSyncReply(page().webPageProxyIdentifier()), 0);
+//    auto [handled] = sendResult.takeReplyOr(false);
+//    return handled;
+
+    auto sendResult = connection().sendSync(Messages::ModelConnectionToWebProcess::RequestHostingContextID(identifier), 0);
+    auto [contextID] = sendResult.takeReplyOr(0);
+    RELEASE_LOG(Process, "EDDYEDDY RequestHostingContextID callback ctxID:%u", contextID);
+    m_contextIDForBackendIdentifier.set(identifier, contextID);
+//    , [this, protectedThis = Ref { *this }, identifier] (auto contextID) {
+//        RELEASE_LOG(Process, "EDDYEDDY RequestHostingContextID callback ctxID:%u", contextID);
+//
+//        m_contextIDForBackendIdentifier.set(identifier, contextID);
+////        m_setupFullscreenHandler(contextID, FloatSize(videoElement->videoWidth(), videoElement->videoHeight()));
+//    }
     connection().send(Messages::ModelConnectionToWebProcess::LoadModel(identifier, model), { });
 }
 

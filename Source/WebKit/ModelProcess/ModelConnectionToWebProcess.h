@@ -98,6 +98,8 @@ private:
     void configureLoggingChannel(const String&, WTFLogChannelState, WTFLogLevel);
         
     // EDDY
+    using LayerHostingContextIDCallback = CompletionHandler<void(LayerHostingContextID)>;
+    void requestHostingContextID(RenderingBackendIdentifier identifier, LayerHostingContextIDCallback&&);
     void loadModel(RenderingBackendIdentifier identifier, Ref<WebCore::Model>&&);
 
     // IPC::Connection::Client

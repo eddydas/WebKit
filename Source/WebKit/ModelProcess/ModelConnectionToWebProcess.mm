@@ -142,6 +142,21 @@ void ModelConnectionToWebProcess::configureLoggingChannel(const String& channelN
 #endif
 }
 
+void ModelConnectionToWebProcess::requestHostingContextID(RenderingBackendIdentifier identifier, CompletionHandler<void(LayerHostingContextID)>&& completionHandler)
+{
+    RELEASE_LOG(Process, "EDDYEDDY requestHostingContextID");
+    
+    LayerHostingContextID ctxId;
+    auto addResult = m_tmpModelPlayers.ensure(identifier, [&] () mutable {
+        const auto& player = TmpModelPlayer::create();
+        ctxId = player->layerHostingContextId();
+        RELEASE_LOG(Process, "EDDYEDDY ctxId is now %u", ctxId);
+        return player;
+    });
+    ASSERT_UNUSED(addResult, addResult.isNewEntry);
+    completionHandler(ctxId);
+}
+
 void ModelConnectionToWebProcess::loadModel(RenderingBackendIdentifier identifier, Ref<WebCore::Model>&& model)
 {
     RELEASE_LOG(Process, "EDDYEDDY ModelConnectionToWebProcess::loadModel: identifier=%llu size=%zu url=%s", identifier.toUInt64(), model->data()->size(), model->url().string().utf8().data());
@@ -243,7 +258,16 @@ Ref<TmpModelPlayer> TmpModelPlayer::create()
     return adoptRef(*new TmpModelPlayer());
 }
 
-TmpModelPlayer::TmpModelPlayer() = default;
+TmpModelPlayer::TmpModelPlayer()
+{
+    m_layer = adoptNS([[CALayer alloc] init]);
+    [m_layer setBackgroundColor:cachedCGColor(Color::green).get()];
+    [m_layer setFrame:CGRectMake(0, 0, 100, 100)];
+    
+    LayerHostingContextOptions contextOptions;
+    m_inlineLayerHostingContext = LayerHostingContext::createForExternalHostingProcess(contextOptions);
+    m_inlineLayerHostingContext->setRootLayer(m_layer.get());
+}
 
 TmpModelPlayer::~TmpModelPlayer()
 {
@@ -253,14 +277,6 @@ TmpModelPlayer::~TmpModelPlayer()
 
 void TmpModelPlayer::load(WebCore::Model& model)
 {
-    m_layer = adoptNS([[CALayer alloc] init]);
-    [m_layer setBackgroundColor:cachedCGColor(Color::green).get()];
-    [m_layer setFrame:CGRectMake(0, 0, 100, 100)];
-    
-    LayerHostingContextOptions contextOptions;
-    m_inlineLayerHostingContext = LayerHostingContext::createForExternalHostingProcess(contextOptions);
-    m_inlineLayerHostingContext->setRootLayer(m_layer.get());
-
     //m_loader = WebCore::loadREModel(model, *this);
 }
 //

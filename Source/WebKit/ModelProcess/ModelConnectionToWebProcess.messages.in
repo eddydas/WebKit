@@ -32,6 +32,7 @@ messages -> ModelConnectionToWebProcess WantsDispatchMessage {
     ConfigureLoggingChannel(String channelName, enum:uint8_t WTFLogChannelState state, enum:uint8_t WTFLogLevel level);
 
     // EDDY
+    RequestHostingContextID(WebKit::RenderingBackendIdentifier identifier) -> (uint32_t contextID) Synchronous;
     LoadModel(WebKit::RenderingBackendIdentifier identifier, Ref<WebCore::Model> model);
 }
 
