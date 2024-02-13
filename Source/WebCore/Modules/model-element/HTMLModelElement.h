@@ -71,6 +71,7 @@ public:
     ReadyPromise& ready() { return m_readyPromise.get(); }
 
     RefPtr<Model> model() const;
+    RefPtr<ModelPlayer> modelPlayer() const;
 
     bool usesPlatformLayer() const;
     PlatformLayer* platformLayer() const;
@@ -124,7 +125,6 @@ private:
     void setSourceURL(const URL&);
     void modelDidChange();
     void createModelPlayer();
-    RefPtr<ModelPlayer> modelPlayer();
 
     HTMLModelElement& readyPromiseResolve();
 

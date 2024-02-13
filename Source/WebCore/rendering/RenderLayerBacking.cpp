@@ -51,6 +51,7 @@
 #include "LocalFrameView.h"
 #include "Logging.h"
 #include "Model.h"
+#include "ModelPlayer.h"
 #include "NullGraphicsContext.h"
 #include "Page.h"
 #include "PerformanceLoggingClient.h"
@@ -1190,8 +1191,14 @@ bool RenderLayerBacking::updateConfiguration(const RenderLayer* compositingAnces
         if (element->usesPlatformLayer())
             m_graphicsLayer->setContentsToPlatformLayer(element->platformLayer(), GraphicsLayer::ContentsLayerPurpose::Model);
         else if (auto model = element->model()) {
+            auto layerHostingContextID = element->modelPlayer()->layerHostingContextID();
+            if (layerHostingContextID) {
+                RELEASE_LOG(Process, "EDDYEDDY m_graphicsLayer->setContentsToModel has context ID: %u", layerHostingContextID.value());
+            }
+            else {
+                RELEASE_LOG(Process, "EDDYEDDY m_graphicsLayer->setContentsToModel has no context ID");
+            }
             m_graphicsLayer->setContentsToModel(WTFMove(model), element->isInteractive() ? GraphicsLayer::ModelInteraction::Enabled : GraphicsLayer::ModelInteraction::Disabled);
-            RELEASE_LOG(Process, "EDDYEDDY m_graphicsLayer->setContentsToModel");
         }
 
         element->sizeMayHaveChanged();

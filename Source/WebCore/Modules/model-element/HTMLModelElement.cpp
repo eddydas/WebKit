@@ -296,7 +296,7 @@ void HTMLModelElement::createModelPlayer()
     m_modelPlayer->load(*m_model, size);
 }
 
-RefPtr<ModelPlayer> HTMLModelElement::modelPlayer()
+RefPtr<ModelPlayer> HTMLModelElement::modelPlayer() const
 {
     return m_modelPlayer;
 }
