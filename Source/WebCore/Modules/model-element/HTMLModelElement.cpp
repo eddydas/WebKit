@@ -296,6 +296,11 @@ void HTMLModelElement::createModelPlayer()
     m_modelPlayer->load(*m_model, size);
 }
 
+RefPtr<ModelPlayer> HTMLModelElement::modelPlayer()
+{
+    return m_modelPlayer;
+}
+
 bool HTMLModelElement::usesPlatformLayer() const
 {
     return m_modelPlayer && m_modelPlayer->layer();

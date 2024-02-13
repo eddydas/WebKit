@@ -74,6 +74,12 @@ PlatformLayer* ModelProcessModelPlayer::layer()
     return nullptr;
 }
 
+std::optional<WebKit::LayerHostingContextID> ModelProcessModelPlayer::layerHostingContextID()
+{
+    auto& connection = WebProcess::singleton().ensureModelProcessConnection();
+    return connection.contextIDForBackendIdentifier(m_identifier);
+}
+
 void ModelProcessModelPlayer::handleMouseDown(const LayoutPoint&, MonotonicTime)
 {
 }

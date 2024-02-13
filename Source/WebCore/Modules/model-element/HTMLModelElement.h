@@ -124,6 +124,7 @@ private:
     void setSourceURL(const URL&);
     void modelDidChange();
     void createModelPlayer();
+    RefPtr<ModelPlayer> modelPlayer();
 
     HTMLModelElement& readyPromiseResolve();
 

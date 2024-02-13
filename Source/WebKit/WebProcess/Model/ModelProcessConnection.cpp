@@ -144,6 +144,9 @@ bool ModelProcessConnection::waitForDidInitialize()
 void ModelProcessConnection::layerHostingContextIdChanged(WebKit::RenderingBackendIdentifier identifier, std::optional<WebKit::LayerHostingContextID> inlineLayerHostingContextId)
 {
     RELEASE_LOG(Process, "EDDYEDDY layerHostingContextIdChanged identifier:%llu, ctxID:%u", identifier.toUInt64(), inlineLayerHostingContextId.value_or(0));
+    
+    if (inlineLayerHostingContextId)
+        m_contextIDForBackendIdentifier.set(identifier, inlineLayerHostingContextId.value());
 }
 
 #if HAVE(VISIBILITY_PROPAGATION_VIEW)

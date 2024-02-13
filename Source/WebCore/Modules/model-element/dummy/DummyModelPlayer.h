@@ -44,6 +44,7 @@ private:
     void load(Model&, LayoutSize) override;
     void sizeDidChange(LayoutSize) override;
     PlatformLayer* layer() override;
+    std::optional<LayerHostingContextID> layerHostingContextID() override;
     void enterFullscreen() override;
     void handleMouseDown(const LayoutPoint&, MonotonicTime) override;
     void handleMouseMove(const LayoutPoint&, MonotonicTime) override;

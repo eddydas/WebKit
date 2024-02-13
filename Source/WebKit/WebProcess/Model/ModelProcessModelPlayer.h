@@ -43,6 +43,8 @@ public:
 
     virtual ~ModelProcessModelPlayer();
 
+    //std::optional<WebKit::LayerHostingContextID> layerHostingContextID();
+
 private:
     explicit ModelProcessModelPlayer(WebPage&, WebCore::ModelPlayerClient&);
 
@@ -53,6 +55,7 @@ private:
     void load(WebCore::Model&, WebCore::LayoutSize) final;
     void sizeDidChange(WebCore::LayoutSize) final;
     PlatformLayer* layer() final;
+    std::optional<WebKit::LayerHostingContextID> layerHostingContextID() final;
     void handleMouseDown(const LayoutPoint&, MonotonicTime) final;
     void handleMouseMove(const LayoutPoint&, MonotonicTime) final;
     void handleMouseUp(const LayoutPoint&, MonotonicTime) final;

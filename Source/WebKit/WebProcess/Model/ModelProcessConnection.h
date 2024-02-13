@@ -73,6 +73,8 @@ public:
     void addClient(const Client& client) { m_clients.add(client); }
     void removeClient(const Client& client) { m_clients.remove(client); }
 
+    std::optional<WebKit::LayerHostingContextID> contextIDForBackendIdentifier(WebKit::RenderingBackendIdentifier backendIdentifier) { return m_contextIDForBackendIdentifier.getOptional(backendIdentifier); }
+
     static constexpr Seconds defaultTimeout = 3_s;
 private:
     ModelProcessConnection(IPC::Connection::Identifier&&);
@@ -101,6 +103,7 @@ private:
 #endif
 
     WeakHashSet<Client> m_clients;
+    HashMap<WebKit::RenderingBackendIdentifier, WebKit::LayerHostingContextID> m_contextIDForBackendIdentifier;
 };
 
 } // namespace WebKit

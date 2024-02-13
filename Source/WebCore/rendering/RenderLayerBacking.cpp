@@ -1189,8 +1189,10 @@ bool RenderLayerBacking::updateConfiguration(const RenderLayer* compositingAnces
         // but this is a runtime decision.
         if (element->usesPlatformLayer())
             m_graphicsLayer->setContentsToPlatformLayer(element->platformLayer(), GraphicsLayer::ContentsLayerPurpose::Model);
-        else if (auto model = element->model())
+        else if (auto model = element->model()) {
             m_graphicsLayer->setContentsToModel(WTFMove(model), element->isInteractive() ? GraphicsLayer::ModelInteraction::Enabled : GraphicsLayer::ModelInteraction::Disabled);
+            RELEASE_LOG(Process, "EDDYEDDY m_graphicsLayer->setContentsToModel");
+        }
 
         element->sizeMayHaveChanged();
 

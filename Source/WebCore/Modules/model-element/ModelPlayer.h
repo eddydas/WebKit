@@ -36,6 +36,8 @@
 
 namespace WebCore {
 
+using LayerHostingContextID = uint32_t; // FIXME: Merge with that in MediaPlayer
+
 class Model;
 
 class WEBCORE_EXPORT ModelPlayer : public RefCounted<ModelPlayer> {
@@ -46,6 +48,7 @@ public:
     virtual void load(Model&, LayoutSize) = 0;
     virtual void sizeDidChange(LayoutSize) = 0;
     virtual PlatformLayer* layer() = 0;
+    virtual std::optional<LayerHostingContextID> layerHostingContextID() = 0;
     virtual void enterFullscreen() = 0;
     virtual bool supportsMouseInteraction();
     virtual bool supportsDragging();
