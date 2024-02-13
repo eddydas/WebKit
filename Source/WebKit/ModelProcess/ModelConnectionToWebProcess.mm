@@ -146,12 +146,17 @@ void ModelConnectionToWebProcess::loadModel(RenderingBackendIdentifier identifie
 {
     RELEASE_LOG(Process, "EDDYEDDY ModelConnectionToWebProcess::loadModel: identifier=%llu size=%zu url=%s", identifier.toUInt64(), model->data()->size(), model->url().string().utf8().data());
     
+    LayerHostingContextID ctxId;
     auto addResult = m_tmpModelPlayers.ensure(identifier, [&] () mutable {
         const auto& player = TmpModelPlayer::create();
         player->load(WTFMove(model));
+        ctxId = player->layerHostingContextId();
+        RELEASE_LOG(Process, "EDDYEDDY ctxId is now %u", ctxId);
         return player;
     });
     ASSERT_UNUSED(addResult, addResult.isNewEntry);
+    
+    m_connection->send(Messages::ModelProcessConnection::LayerHostingContextIdChanged(identifier, ctxId), 0);
 }
 
 bool ModelConnectionToWebProcess::allowsExitUnderMemoryPressure() const

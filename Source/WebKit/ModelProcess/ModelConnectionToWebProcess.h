@@ -170,6 +170,7 @@ public:
 //    WKSeparatedModelLayer *layer() const;
 
 //    void didMoveToWindow();
+    LayerHostingContextID layerHostingContextId() { return m_inlineLayerHostingContext->contextID(); }
 
 private:
     TmpModelPlayer();

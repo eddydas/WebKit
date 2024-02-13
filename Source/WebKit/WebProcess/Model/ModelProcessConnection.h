@@ -90,6 +90,7 @@ private:
 
     // Messages.
     void didInitialize(std::optional<ModelProcessConnectionInfo>&&);
+    void layerHostingContextIdChanged(WebKit::RenderingBackendIdentifier identifier, std::optional<WebKit::LayerHostingContextID> inlineLayerHostingContextId);
 
     // The connection from the web process to the model process.
     Ref<IPC::Connection> m_connection;

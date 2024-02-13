@@ -442,7 +442,30 @@ fi
 
 function ios_family_process_model_entitlements()
 {
-    ios_family_process_webcontent_shared_entitlements
+    # FIXME: Audit these to take away those that model process doesn't need
+    plistbuddy Add :com.apple.QuartzCore.secure-mode bool YES
+    plistbuddy Add :com.apple.QuartzCore.webkit-end-points bool YES
+    plistbuddy add :com.apple.QuartzCore.webkit-limited-types bool YES
+    plistbuddy Add :com.apple.developer.coremedia.allow-alternate-video-decoder-selection bool YES
+    plistbuddy Add :com.apple.mediaremote.set-playback-state bool YES
+    plistbuddy Add :com.apple.pac.shared_region_id string WebContent
+    plistbuddy Add :com.apple.private.allow-explicit-graphics-priority bool YES
+    plistbuddy Add :com.apple.private.coremedia.extensions.audiorecording.allow bool YES
+    plistbuddy Add :com.apple.private.coremedia.pidinheritance.allow bool YES
+    plistbuddy Add :com.apple.private.memorystatus bool YES
+    plistbuddy Add :com.apple.private.network.socket-delegate bool YES
+    plistbuddy Add :com.apple.private.webinspector.allow-remote-inspection bool YES
+    plistbuddy Add :com.apple.private.webinspector.proxy-application bool YES
+    plistbuddy Add :com.apple.private.webkit.use-xpc-endpoint bool YES
+    plistbuddy Add :com.apple.runningboard.assertions.webkit bool YES
+if [[ "${PRODUCT_NAME}" != WebContentExtension && "${PRODUCT_NAME}" != WebContentCaptivePortalExtension ]]; then
+    plistbuddy Add :com.apple.private.gpu-restricted bool YES
+    plistbuddy Add :com.apple.private.pac.exception bool YES
+    plistbuddy Add :com.apple.private.sandbox.profile string com.apple.WebKit.Model
+fi
+    plistbuddy add :com.apple.coreaudio.allow-vorbis-decode bool YES
+    webcontent_sandbox_entitlements
+
 }
 
 function ios_family_process_adattributiond_entitlements()

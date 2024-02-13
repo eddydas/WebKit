@@ -141,6 +141,11 @@ bool ModelProcessConnection::waitForDidInitialize()
     return m_connection->isValid();
 }
 
+void ModelProcessConnection::layerHostingContextIdChanged(WebKit::RenderingBackendIdentifier identifier, std::optional<WebKit::LayerHostingContextID> inlineLayerHostingContextId)
+{
+    RELEASE_LOG(Process, "EDDYEDDY layerHostingContextIdChanged identifier:%llu, ctxID:%u", identifier.toUInt64(), inlineLayerHostingContextId.value_or(0));
+}
+
 #if HAVE(VISIBILITY_PROPAGATION_VIEW)
 void ModelProcessConnection::createVisibilityPropagationContextForPage(WebPage& page)
 {

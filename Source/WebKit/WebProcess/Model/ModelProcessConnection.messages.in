@@ -24,6 +24,8 @@
 
 messages -> ModelProcessConnection WantsDispatchMessage {
     DidInitialize(std::optional<WebKit::ModelProcessConnectionInfo> info) CanDispatchOutOfOrder
+    
+    LayerHostingContextIdChanged(WebKit::RenderingBackendIdentifier identifier, std::optional<WebKit::LayerHostingContextID> inlineLayerHostingContextId);
 }
 
 #endif // ENABLE(MODEL_PROCESS)

@@ -22,3 +22,11 @@
 ; THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "Resources/SandboxProfiles/ios/com.apple.WebKit.WebContent.sb.in"
+
+(allow mach-lookup
+    (global-name "com.apple.CARenderServer"))
+
+(allow mach-lookup
+    (require-all
+        (extension "com.apple.webkit.extension.mach")
+        (global-name "com.apple.CARenderServer")))
